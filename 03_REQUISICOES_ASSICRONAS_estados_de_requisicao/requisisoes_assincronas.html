@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Requisições Assícronas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script>
+        function requisitarPagina(url) {
+            let ajax = new XMLHttpRequest();  //modificação feita pelo client
+
+            // requisição não iniciada, state = 0
+            console.log(ajax.readyState);
+
+            // conexão estabelecida com o servidor, state = 1
+            ajax.open('GET', url); //modificação feita pelo client
+            console.log(ajax.readyState);
+
+
+            ajax.send(); //modificação feita pelo servidor
+
+            //Função que consegue receber do servidor as modificações
+            //A onreadystatechangefunção é chamada toda vez que o readyState é alterado.
+
+            ajax.onreadystatechange = () => {
+
+                // requisição recebida, state 2
+                // processando requisição, state 3
+                // requisição finalizada e a resposta está pronta, state 4
+                console.log(ajax.readyState)
+            };
+
+
+            //console.log(ajax);
+
+
+
+
+            // Sem o ajax as requisições são sicronas, ou seja,
+            // as requisões são feitas uma por uma.
+            // Toda vez que uma requisição é feita o usuário tem que esperar
+            // sua resposta sem poder interagir com a página.
+            // Quando a requisao é feita sem o ajax ela é externa, ou seja,
+            // outra página é aberta.
+
+            // Já com o ajax as requisições são assicronas, ou seja,
+            // diversas requisões podem ser feitas ao mesmo tempo.
+            // A filosofia do ajax é permitir que o usuário continue
+            // interagindo com a página enquanto as requisições esperam suas respostas.
+            // O ajax faz uma requisicao interna, ou seja, dentro da aplicacao,
+            // desta maneira pode-se acessar o conteúdo da página requisitada e o inserir na página atual.
+
+            /*ReadyState
+            - 0: request not initialized (requisição não iniciada)
+            - 1: server connection established (conexão estabelecida com servidor)
+            - 2: request received (requisição recebida)
+            - 3: processing request (processando requisição)
+            - 4: request finished and responde is ready (requisição finalizada e a resposta está pronta)
+             */
+
+        }
+    </script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-light bg-light mb-4">
+    <div class="container">
+        <div class="navbar-brand mb-0">
+            <h3>Requisições síncronas e assíncronas</h3>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+
+    <div class="row mb-2">
+
+        <div class="col d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mr-1" onclick="requisitarPagina('pagina_1_conteudo.html')">Página 1</a>
+            <a href="#" class="btn btn-primary mr-1" onclick="requisitarPagina('pagina_2_conteudo.html')">Página 2</a>
+            <a href="#" class="btn btn-primary" onclick="requisitarPagina('pagina_3_conteudo.html')">Página 3</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col d-flex justify-content-center">
+
+
+
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

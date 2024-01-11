@@ -1,0 +1,96 @@
+<!--
+    O que é xml ?
+
+    XML, do inglês eXtensible Markup Language, é uma linguagem de marcação recomendada pela W3C para a criação de
+    documentos com dados organizados hierarquicamente, tais como textos, banco de dados
+    ou desenhos vetoriais. A linguagem XML é classificada como extensível porque permite definir os elementos
+    de marcação.
+
+    Linguagem de Marcação?
+
+    Linguagem de marcação é um agregado de códigos que podem ser aplicados a dados ou textos para serem lidos por
+    computadores ou pessoas. Por exemplo, o PHP_PAGES é uma linguagem de marcação para organizar e formatar um website,
+     já o XML tem o mesmo conceito, mas para padronizar uma sequência de dados com o objetivo de organizar, separar
+     o conteúdo e integrá-lo com outras linguagens.
+
+    Principais Características do XML
+
+    O XML traz uma sintaxe básica que pode ser utilizada para compartilhar informações entre diferentes computadores
+    e aplicações. Quando combinado com outros padrões, torna possível definir o conteúdo de um documento separadamente
+    de seu formato, tornando simples para reutilizar o código em outras aplicações para diferentes propósitos.
+
+    Portanto, uma das suas principais características é sua portabilidade, pois, por exemplo, um banco de dados pode
+     escrever um arquivo XML para que outro banco consiga lê-lo.
+
+    Aplicações
+
+    Alguns dos propósitos do XML são: auxiliar os sistemas de informação no compartilhamento de dados (especialmente
+     via internet), codificar documentos e inserir seriais nos dados comparando o texto com o de outras linguagens
+     baseadas em serialização.
+
+    Quando você recebe atualizações vindas de uma assinatura de RSS, isso só foi possível porque a fonte em questão
+    disponibilizou um arquivo XML que pode fornecer o feed ao programa que fez a leitura instalado em seu computador.
+
+    W3C, ou World Wide Web Consortium, é um consórcio de empresas de tecnologia que visa padronizar a criação e
+    interpretação de conteúdos para websites. Foi fundada em 1994 por Tim Berners-Lee, o criador da internet,
+    para extrair o máximo que a rede pode oferecer.
+
+-->
+
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <title>Catálogo de filmes</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script>
+        function getFilmes() {
+            let xmlHttp = new XMLHttpRequest();
+            xmlHttp.open('GET','filmes.xml');
+            console.log(xmlHttp);
+            xmlHttp.onreadystatechange = () => {
+                if(xmlHttp.readyState === 4 && xmlHttp.status === 200){
+                    let xmlFilmes = xmlHttp.responseText;
+                    console.log(xmlFilmes);
+                }
+
+                if(xmlHttp.readyState == 4 && xmlHttp.status === 404){
+                    //..
+                    console.log('oi');
+                }
+            };
+
+            xmlHttp.send();
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light mb-4">
+        <div class="container">
+            <div class="navbar-brand">
+                <h3>Catálogo de filmes</h3>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-success" onclick="getFilmes()">Listar filmes</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</body>
+
+
+</html>

@@ -1,0 +1,202 @@
+<!--
+    O que é xml ?
+
+    XML, do inglês eXtensible Markup Language, é uma linguagem de marcação recomendada pela W3C para a criação de
+    documentos com dados organizados hierarquicamente, tais como textos, banco de dados
+    ou desenhos vetoriais. A linguagem XML é classificada como extensível porque permite definir os elementos
+    de marcação.
+
+    Linguagem de Marcação?
+
+    Linguagem de marcação é um agregado de códigos que podem ser aplicados a dados ou textos para serem lidos por
+    computadores ou pessoas. Por exemplo, o PHP_PAGES é uma linguagem de marcação para organizar e formatar um website,
+     já o XML tem o mesmo conceito, mas para padronizar uma sequência de dados com o objetivo de organizar, separar
+     o conteúdo e integrá-lo com outras linguagens.
+
+    Principais Características do XML
+
+    O XML traz uma sintaxe básica que pode ser utilizada para compartilhar informações entre diferentes computadores
+    e aplicações. Quando combinado com outros padrões, torna possível definir o conteúdo de um documento separadamente
+    de seu formato, tornando simples para reutilizar o código em outras aplicações para diferentes propósitos.
+
+    Portanto, uma das suas principais características é sua portabilidade, pois, por exemplo, um banco de dados pode
+     escrever um arquivo XML para que outro banco consiga lê-lo.
+
+    Aplicações
+
+    Alguns dos propósitos do XML são: auxiliar os sistemas de informação no compartilhamento de dados (especialmente
+     via internet), codificar documentos e inserir seriais nos dados comparando o texto com o de outras linguagens
+     baseadas em serialização.
+
+    Quando você recebe atualizações vindas de uma assinatura de RSS, isso só foi possível porque a fonte em questão
+    disponibilizou um arquivo XML que pode fornecer o feed ao programa que fez a leitura instalado em seu computador.
+
+    W3C, ou World Wide Web Consortium, é um consórcio de empresas de tecnologia que visa padronizar a criação e
+    interpretação de conteúdos para websites. Foi fundada em 1994 por Tim Berners-Lee, o criador da internet,
+    para extrair o máximo que a rede pode oferecer.
+
+
+    Qual a diferença entre um Objeto Literal e o JSON?
+
+    Muitos sabem que o nome JSON vem de “JavaScript Object Notation”.
+    Então, por que objetos JavaScript escritos de forma literal nem sempre
+    são JSON?
+
+    {
+    "a": 2,
+    "b": 3
+    }
+    O exemplo acima pode ser considerado tanto um objeto literal em JavaScript quanto um JSON. Acontece que o JSON é
+    um formato usado para a transferência de dados, independente de linguagem de programação, assim como o XML, CSV
+    ou YAML.
+
+    Apesar da sintaxe de um objeto literal e do JSON serem muito parecidas (a ponto de podermos usar um JSON como objeto
+    literal), o JSON possui especificações. Se sairmos dessas especificações, não estamos mais falando de um JSON.
+
+    Principais Diferenças entre JSON e Objeto Literal JavaScript
+    Chaves – As chaves no JSON devem vir entre aspas duplas. No Objeto Literal, as chaves podem ser strings com aspas
+    simples, duplas, sem aspas, variáveis ou Symbols.
+
+    Valores – O Objeto Literal JavaScript aceita qualquer tipo de dado presente na linguagem (como Date) e até funções.
+
+    O JSON só aceita os seguintes tipos de valor:
+
+    string
+    number
+    boolean
+    null
+    array
+    outro JSON
+    Por essas limitações que o MongoDB usa o chamado BSON ao invés do JSON para armazenar dados. Além de armazenar o
+    JSON em um formato binário, também adiciona suporte a outros tipos de dados, como:
+
+    integer
+    double
+    date
+    byte array
+    objeto BSON
+    array BSON
+    código JavaScript
+    dados binários em MD5
+    expressões regulares
+-->
+
+
+
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <title>Catálogo de filmes</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script>
+        function getFilmes() {
+            let xmlHttp = new XMLHttpRequest();
+            xmlHttp.open('GET', 'filmes.json');
+            console.log(xmlHttp);
+            xmlHttp.onreadystatechange = () => {
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                    //Recebe o conteúdo da página filmes.json como uma string em notação json
+                    let jsonFilmes = xmlHttp.responseText;
+                    console.log(jsonFilmes);
+
+                    //Converte a string em notação json para um objeto json
+                    let objJsonFilmes = JSON.parse(jsonFilmes);
+                    console.log(objJsonFilmes);
+
+                    //Percorre os filmes
+                    for (filme in objJsonFilmes['filmes']) {  // || objJsonFilmes.filmes...
+                        console.log(objJsonFilmes['filmes'][filme]);
+
+                        let item = objJsonFilmes['filmes'][filme];
+                        let divRow = document.createElement('div');
+                        divRow.className = 'row';
+
+                        let divCol = document.createElement('div');
+                        divCol.className = 'col';
+
+                        let generos = '';
+                        for (let g in item['generos']) {
+                            console.log(item['generos'][g]['genero']);
+                            if (generos) {
+                                generos += ', ';
+                            }
+                            generos += item['generos'][g]['genero'];
+                        }
+
+                        let elenco = '';
+                        for (let e in item['elenco']) {
+                            console.log(item['elenco'][e]['ator']);
+                            if (elenco) {
+                                elenco += ', ';
+                            }
+                            elenco += item['elenco'][e]['ator'];
+                        }
+
+
+                        let p1 = document.createElement('p');
+                        p1.innerHTML = '<strong>Título: </strong>' + item['titulo'];
+                        let p2 = document.createElement('p');
+                        p2.innerHTML = '<strong>Resumo: </strong>' + item['resumo'];
+                        let p3 = document.createElement('p');
+                        p3.innerHTML = '<strong>Gênero: </strong>' + generos;
+                        let p4 = document.createElement('p');
+                        p4.innerHTML = '<strong>Elenco: </strong>' + elenco;
+                        let p5 = document.createElement('p');
+                        p5.innerHTML = '<strong>Data de lançamento: </strong>' + item['dataLancamento']['data'] +
+                            ' (' + item['dataLancamento']['pais'] + ')';
+
+                        let hr = document.createElement('hr');
+
+                        divRow.appendChild(divCol);
+                        divCol.appendChild(p1);
+                        divCol.appendChild(p2);
+                        divCol.appendChild(p3);
+                        divCol.appendChild(p4);
+                        divCol.appendChild(p5);
+                        divCol.appendChild(hr);
+
+
+                        document.getElementById('lista').appendChild(divRow);
+
+                    }
+                }
+
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 404) {
+                    //..
+                }
+
+            };
+
+
+                xmlHttp.send();
+        }
+
+    </script>
+</head>
+
+<body>
+<nav class="navbar navbar-light bg-light mb-4">
+    <div class="container">
+        <div class="navbar-brand">
+            <h3>Catálogo de filmes</h3>
+        </div>
+        <div class="nav-item">
+            <button type="button" class="btn btn-success" onclick="getFilmes()">Listar filmes</button>
+        </div>
+    </div>
+</nav>
+
+<div id='lista' class="container">
+
+</div>
+
+</body>
+
+
+</html>
